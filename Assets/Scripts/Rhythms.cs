@@ -100,6 +100,8 @@ public class Rhythms
 
 	int beepsPlayed = 0;
 
+	int currentPressId = 0;
+
 	int selectedButton = 0;
 
 	bool buttonIsHeld = false;
@@ -348,7 +350,7 @@ public class Rhythms
 	void OnRelease()
 	{
 		
-
+		stopBeep ();
 		if (buttonIsHeld) {//No releasing buttons when they aren't held
 			StartCoroutine(MoveButton(false, selectedButton));
 			GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, transform);
@@ -391,28 +393,26 @@ public class Rhythms
 
 	IEnumerator beepCount() {
 		beepsPlayed = 0;
+		currentPressId++;
+		int thisPressId = currentPressId;
 		yield return new WaitForSeconds (1f);
-		int currentBeepsPlayed = 0;
-		while (buttonIsHeld) {
-			if (beepsPlayed < currentBeepsPlayed) { //This means that the button was released and pressed again in the time it took one beep to play.
-				break; //We need to leave, because if this condition is true then there is another instance of this method running
-			}
+		while (thisPressId == currentPressId & buttonIsHeld) {
+			//If thisPressId != currentPressId, then another instance of this method is active.
 			beepsPlayed++;
-			currentBeepsPlayed = beepsPlayed;
-			LogMessage ("Beep: " + beepsPlayed);
-			GetComponent<KMAudio>().PlaySoundAtTransform("NewHoldBeep", transform);
+			LogMessage ("Beep: " + beepsPlayed + " PressID: " + thisPressId);
+			stopBeep ();
+			audioRefBeep = GetComponent<KMAudio>().PlaySoundAtTransformWithRef("NewHoldBeep", transform);
 			yield return new WaitForSeconds (2.5f);
-
 
 		}
 	}
-	/*	
+
 	void stopBeep() {
 		if (audioRefBeep != null && audioRefBeep.StopSound != null) {
 			//LogMessage ("Halting beep sound!");
 			audioRefBeep.StopSound ();
 		}
-	}*/
+	}
 
 	//PASS/FAIL
 
@@ -423,6 +423,7 @@ public class Rhythms
 		lightOff ();
 		isSolved = true;
 		SetColorblindText ("");
+		stopBeep ();
 	}
 
 	IEnumerator Strike() {
@@ -432,6 +433,7 @@ public class Rhythms
 		lightOff ();
 		SetColorblindText ("");
 		GetComponent<KMBombModule> ().HandleStrike ();
+		stopBeep ();
 		LogMessage ("Gave strike #" + GetComponent<KMBombInfo> ().GetStrikes());
 		yield return new WaitForSecondsRealtime (1.5f);
 		active = true;

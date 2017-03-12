@@ -27,6 +27,6 @@ MonoBehaviour:
     tracker[/url].\r\n\r\n[u]Known:[/u]\r\n\r\nAudio does not cut off over bomb explosion\r\n\r\n[u]Hopefully
     Fixed:[/u]\r\n\r\nLight may sometimes flash white\r\nMany spelling mistakes\r\nDouble-beeping\r\nBad
     logging output"
-  PreviewImage: {fileID: 2800000, guid: 28f421ec14de6ab4e9781efc92c560b6, type: 3}
+  PreviewImage: {fileID: 2800000, guid: 1802b3f7f4e93c944aeb813fdf47bac9, type: 3}
   Tags:
   - Regular Module

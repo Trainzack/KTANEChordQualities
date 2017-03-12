@@ -598,7 +598,7 @@ Transform:
   m_GameObject: {fileID: 1000010751152778}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
   m_LocalPosition: {x: -0.01805842, y: 0.0215, z: 0.0473}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013478022776}
@@ -739,7 +739,7 @@ Transform:
   m_GameObject: {fileID: 1000011179068158}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
   m_LocalPosition: {x: -0.01805842, y: 0.0215, z: -0.0166}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000011186122588}
@@ -752,7 +752,7 @@ Transform:
   m_GameObject: {fileID: 1000013399709188}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
   m_LocalPosition: {x: 0.0483, y: 0.0215, z: 0.0473}
-  m_LocalScale: {x: 0.01, y: 0.009999998, z: 0.009999998}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000013263365120}
@@ -934,7 +934,7 @@ Transform:
   m_GameObject: {fileID: 1000012385430486}
   m_LocalRotation: {x: -0.000000115202326, y: 0.7071067, z: -0.7071068, w: -0.000000115202305}
   m_LocalPosition: {x: 0.0483, y: 0.0215, z: -0.0166}
-  m_LocalScale: {x: 0.01, y: 0.01, z: 0.01}
+  m_LocalScale: {x: 0.005, y: 0.005, z: 0.005}
   m_LocalEulerAnglesHint: {x: 89.980194, y: -180, z: 0}
   m_Children: []
   m_Father: {fileID: 4000010730721890}
@@ -1385,7 +1385,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -1406,7 +1406,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -1427,7 +1427,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
@@ -1448,7 +1448,7 @@ TextMesh:
   m_Anchor: 4
   m_Alignment: 1
   m_TabSize: 4
-  m_FontSize: 40
+  m_FontSize: 80
   m_FontStyle: 0
   m_RichText: 1
   m_Font: {fileID: 12800000, guid: 1ebe1d96973a920409b439b3a0e2bb63, type: 3}
