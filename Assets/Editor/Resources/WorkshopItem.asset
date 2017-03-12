@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5cf2299c8864afe4ab42466f546ae20d, type: 3}
+  m_Name: WorkshopItem
+  m_EditorClassIdentifier: 
+  WorkshopPublishedFileID: 877905209
+  Title: Rythms
+  Description: "[i]Have you ever taken a music theory class where you had to count
+    and clap rhythms? This is just like that, only here your suffering ends when you
+    get it wrong.[/i]\r\n\r\nCount the rhythm of the flashing light, and hit the correct
+    button.\r\n\r\n[h1]About[/h1]\r\n\r\nWhen I saw that, not only was there modded
+    modules, but someone had made a piano keyboard module, I just had to start working
+    on an entire set of music-themed modules. This is the first entry in that set.\r\n\r\n[h1]Manual
+    Pages[/h1]\r\n\r\nA pdf file of the manual is included with the download. If you
+    would like the html version for some reason, let me know and I'll work something
+    out.\r\n\r\n[u]Note:[/u] If you are not familiar with standard musical note durations,
+    you will need to find a musical reference to solve this module.\r\n\r\nThe ID
+    of this module is MusicRhythms.\r\n\r\n[h1]Known Issues:[/h1]\r\n\r\nThe logging
+    output may still be lacking\n\r\nThere are spelling mistakes in the title of this
+    module in the manual."
+  PreviewImage: {fileID: 2800000, guid: 28f421ec14de6ab4e9781efc92c560b6, type: 3}
+  Tags:
+  - Regular Module
