@@ -67,7 +67,7 @@ public class Rhythms
 	{									//Number %4 = button to press, number /4 = instruction: 0: press, 1: hold 1 beep, 2: hold 2 beep, or number = -2: press repeatedly
 		new int[] {8,-2,11,10},//Pattern 0
 		new int[] {4,1,2,6},
-		new int[] {6,7,0,3},
+		new int[] {6,6,0,3},
 		new int[] {1,7,7,6},
 		new int[] {5,3,4,3},
 		new int[] {4,1,2,2},
