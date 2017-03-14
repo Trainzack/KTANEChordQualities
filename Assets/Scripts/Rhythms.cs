@@ -58,7 +58,7 @@ public class Rhythms
 
 	int lightColor;
 
-	int tempo;
+	int tempo = 95;
 	#endregion
 
 	#region Solutions
@@ -143,7 +143,7 @@ public class Rhythms
 
 		GetComponent<KMBombModule>().OnActivate += OnActivate;
 		GetComponent<KMSelectable>().OnCancel += OnCancel;
-		GetComponent<KMSelectable> ().OnInteract += OnInteract;
+		//GetComponent<KMSelectable> ().OnInteract += OnInteract;
 		GetComponent<KMSelectable> ().OnInteractEnded += OnInteractEnded;
 
 
@@ -167,15 +167,14 @@ public class Rhythms
 			buttons[i].OnInteractEnded += OnRelease;
 		}
 
+		/**
 		for (int i = 0; i < patterns.Length; i++) {//This is debug code to ensure that all patterns are the propper length
 			int sum = 0;
 			foreach (int d in patterns[i]) {
 				sum += d;
 			}
-			//Debug.Log ("Pattern " + i + ": " + sum);
-		}
-			
-		tempo = 95;
+			Debug.Log ("Pattern " + i + ": " + sum);
+		}*/
 
 	}
 
@@ -208,7 +207,8 @@ public class Rhythms
 				}
 			};
 		}
-		LogMessage("Detected " +  litIndicators + " lit indicator(s)");
+
+		string message = "Detected " + litIndicators + " lit indicator(s)";
 
 
 
@@ -222,11 +222,15 @@ public class Rhythms
 			
 
 		if (batteryCount > 1) { //If there is more than one batter on the bomb and the rythm is quarter notes, repeat 1st instruction
-			LogMessage("Detected more than one battery");
-			for (int i = 0; i < solutionsStep1[6].Length; i ++) {
+			message += " and more than one battery.";
+			for (int i = 0; i < solutionsStep1 [6].Length; i++) {
 				solutionsStep2 [6] [i] = solutionsStep1 [6] [i];
 			}
+		} else {
+			message += " and one or no batteries.";
 		}
+
+		LogMessage (message);
 
 		lightOn();
 		active = true;
@@ -266,7 +270,7 @@ public class Rhythms
 
 		tempo += Random.Range (1, 7);//Pacing, and prevent nearby patters matching each other.
 
-		LogMessage ("Selected pattern number " + pattern + " and color number " + lightColor +" (" + colorNames[lightColor]+ "); tempo set at " + tempo + "BPM");
+		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light; tempo set at " + tempo + "BPM");
 
 		step = 1;
 		SetCorrect ();
@@ -305,19 +309,15 @@ public class Rhythms
 
 	void OnPress(int button)
 	{
-		
 
 		if (active) {//No pressing buttons when the bomb isn't active
-			if (button == correctButton || correctAction == -2) {
-				LogMessage ("Button number " + button + ", label " + labels [button] + " has been pressed (correct)");
-			} else {
-				LogMessage ("Button number " + button + ", label " + labels [button] + " has been pressed (incorrect)");
-			}
-
+			
 			StartCoroutine (MoveButton (true, button));
 			GetComponent<KMAudio> ().PlayGameSoundAtTransform (KMSoundOverride.SoundEffect.BigButtonPress, transform);
 			buttonIsHeld = true;
 			selectedButton = button;
+			//LogMessage ("Button label " + labels [button] + " has been pressed");
+
 			if (correctAction == -2) {
 				if (timesPressed == 0) {
 					lastTimePressed = Time.time;
@@ -325,17 +325,17 @@ public class Rhythms
 			} else {
 				StartCoroutine (beepCount ());
 			}
-
 		} else {
 			LogMessage ("Ignoring press as module is not currently active.");
 		}
 	}
+
 	/**
 	 * press: Whether to press in (true) or release out (false)
 	 **/
-	IEnumerator MoveButton(bool press, int button) {//This actually moves the physical button.
+	IEnumerator MoveButton (bool press, int button) {//This actually moves the physical button.
 		Transform t = buttons [button].GetComponent<Transform> ();
-		float translateAmount = 0.002f;
+		float translateAmount = 0.0015f;
 		if (press) {
 			translateAmount *= -1;
 		}
@@ -349,21 +349,22 @@ public class Rhythms
 
 	void OnRelease()
 	{
-		
 		stopBeep ();
 		if (buttonIsHeld) {//No releasing buttons when they aren't held
 			StartCoroutine(MoveButton(false, selectedButton));
 			GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.BigButtonRelease, transform);
 			buttonIsHeld = false;
-			string message = "Button labeled " + labels [selectedButton] + " released";
+			string message = "Button labeled " + labels [selectedButton] + " pressed and released";
 			if (correctAction == -2) {//For RAPID BUTTON PRESSES
 				timesPressed++;
 				message += ", pressed " + timesPressed + "/" + timesNeeded + " times";
 				if (timesNeeded <= timesPressed ){ //GetComponent<KMBombInfo> ().GetTime() < 1.5f) {
 					message += ", module has been passed!";
+					LogMessage (message);
 					Pass ();
 				} else if (Time.time - lastTimePressed > buttonMashTime) {
 					message += ", but this release was too late! The delay was " + (Time.time - lastTimePressed) + ", when it should be less than " + buttonMashTime;
+					LogMessage (message);
 					StartCoroutine( Strike ()); //Can't let them wait too long
 				}
 				lastTimePressed = Time.time;
@@ -374,16 +375,20 @@ public class Rhythms
 					if (step == 1) {
 						message += ", moving on to stage 2.";
 						step = 2;
+						LogMessage (message);
 						SetCorrect ();
 					} else {
 						message += ", module has been passed!";
+						LogMessage (message);
 						Pass ();
 					}
 				} else {
 					message += " (incorrect)";
+
+					LogMessage (message);
 					StartCoroutine (Strike ());
 				}
-				LogMessage (message);
+
 			}
 		} else {
 			//The only way to get here is if you press the button before the bomb is active.
@@ -395,14 +400,14 @@ public class Rhythms
 		beepsPlayed = 0;
 		currentPressId++;
 		int thisPressId = currentPressId;
-		yield return new WaitForSeconds (1f);
+		yield return new WaitForSeconds (0.3f);
 		while (thisPressId == currentPressId & buttonIsHeld) {
 			//If thisPressId != currentPressId, then another instance of this method is active.
 			beepsPlayed++;
-			LogMessage ("Beep: " + beepsPlayed + " PressID: " + thisPressId);
+			//LogMessage ("Beep: " + beepsPlayed + " PressID: " + thisPressId);
 			stopBeep ();
-			audioRefBeep = GetComponent<KMAudio>().PlaySoundAtTransformWithRef("NewHoldBeep", transform);
-			yield return new WaitForSeconds (2.5f);
+			audioRefBeep = GetComponent<KMAudio>().PlaySoundAtTransformWithRef("HoldChirp", transform);
+			yield return new WaitForSeconds (0.7f);
 
 		}
 	}

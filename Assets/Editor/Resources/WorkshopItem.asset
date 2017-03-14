@@ -24,9 +24,9 @@ MonoBehaviour:
     If you are not familiar with standard musical note durations, you will need to
     find a musical reference to solve this module.\r\n\r\n\r\n[h1]Issues:[/h1]\r\n\r\nPlease
     post any issues to the [url=https://github.com/Trainzack/KTANERhythms/issues]github
-    tracker[/url].\r\n\r\n[u]Known:[/u]\r\n\r\nAudio does not cut off over bomb explosion\r\n\r\n[u]Hopefully
-    Fixed:[/u]\r\n\r\nLight may sometimes flash white\r\nMany spelling mistakes\r\nDouble-beeping\r\nBad
-    logging output"
+    tracker[/url].\r\n\r\n[u]Known:[/u]\r\n\r\nLogging output not recognized by log
+    tool\r\n\n[u]Hopefully Fixed:[/u]\r\n\r\nDouble-beeping\r\nLight may sometimes
+    flash white\r\nMany spelling mistakes"
   PreviewImage: {fileID: 2800000, guid: 1802b3f7f4e93c944aeb813fdf47bac9, type: 3}
   Tags:
   - Regular Module
