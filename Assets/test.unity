@@ -127,7 +127,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 439642, guid: 8814ea52310d2614a9feda02ec355ae4, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 11497068, guid: 8814ea52310d2614a9feda02ec355ae4, type: 2}
       propertyPath: Parent
@@ -203,19 +203,18 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
---- !u!114 &1098339297 stripped
-MonoBehaviour:
-  m_PrefabParentObject: {fileID: 11497068, guid: 8814ea52310d2614a9feda02ec355ae4,
-    type: 2}
-  m_PrefabInternal: {fileID: 273482026}
-  m_Script: {fileID: 11500000, guid: 27cec48d3b95d1446848a3d79f3366d9, type: 3}
---- !u!1001 &1631552671
+--- !u!1001 &958064644
 Prefab:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 114000012738418648, guid: 18f3758a57029d5419364125560a7859,
+        type: 2}
+      propertyPath: lightOnMaterial.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     - target: {fileID: 4000013625029754, guid: 18f3758a57029d5419364125560a7859, type: 2}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -248,9 +247,20 @@ Prefab:
       propertyPath: m_RootOrder
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 114000012738418648, guid: 18f3758a57029d5419364125560a7859,
+        type: 2}
+      propertyPath: lightOnMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 15c95a7eef23cc347bec7faac5e5a6cb, type: 2}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 18f3758a57029d5419364125560a7859, type: 2}
   m_IsPrefabParent: 0
+--- !u!114 &1098339297 stripped
+MonoBehaviour:
+  m_PrefabParentObject: {fileID: 11497068, guid: 8814ea52310d2614a9feda02ec355ae4,
+    type: 2}
+  m_PrefabInternal: {fileID: 273482026}
+  m_Script: {fileID: 11500000, guid: 27cec48d3b95d1446848a3d79f3366d9, type: 3}
 --- !u!1 &1817574459
 GameObject:
   m_ObjectHideFlags: 0
@@ -337,4 +347,4 @@ Transform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_Children: []
   m_Father: {fileID: 0}
-  m_RootOrder: 2
+  m_RootOrder: 3

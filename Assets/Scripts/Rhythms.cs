@@ -400,14 +400,14 @@ public class Rhythms
 		beepsPlayed = 0;
 		currentPressId++;
 		int thisPressId = currentPressId;
-		yield return new WaitForSeconds (0.3f);
+		yield return new WaitForSeconds (0.4f);
 		while (thisPressId == currentPressId & buttonIsHeld) {
 			//If thisPressId != currentPressId, then another instance of this method is active.
 			beepsPlayed++;
 			//LogMessage ("Beep: " + beepsPlayed + " PressID: " + thisPressId);
 			stopBeep ();
 			audioRefBeep = GetComponent<KMAudio>().PlaySoundAtTransformWithRef("HoldChirp", transform);
-			yield return new WaitForSeconds (0.7f);
+			yield return new WaitForSeconds (1.1f);
 
 		}
 	}
