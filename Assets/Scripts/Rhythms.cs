@@ -14,6 +14,8 @@ public class Rhythms
 	public Material lightOnMaterial;
 	public Material lightOffMaterial;
 
+	public KMModSettings settings;
+
 	public TextMesh colorblindText;
 	#endregion
 	[HideInInspector]
@@ -131,7 +133,7 @@ public class Rhythms
 	void Init()
 	{
 		lightOff ();
-		//blinkLight.range = 0;
+		blinkLight.range = 0.1f;
 
 		thisModuleNumber = moduleNumber++;
 
@@ -270,7 +272,7 @@ public class Rhythms
 
 		tempo += Random.Range (1, 7);//Pacing, and prevent nearby patters matching each other.
 
-		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light; tempo set at " + tempo + "BPM");
+		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light; tempo set at " + tempo + " BPM");
 
 		step = 1;
 		SetCorrect ();
@@ -335,7 +337,7 @@ public class Rhythms
 	 **/
 	IEnumerator MoveButton (bool press, int button) {//This actually moves the physical button.
 		Transform t = buttons [button].GetComponent<Transform> ();
-		float translateAmount = 0.0015f;
+		float translateAmount = 0.0009f;
 		if (press) {
 			translateAmount *= -1;
 		}
@@ -458,7 +460,7 @@ public class Rhythms
 		Color color = blinkSprite.color;
 		color.a = 1.0f;
 		blinkSprite.color = color;
-		//blinkModel.material.color = colors [lightColor];
+		blinkModel.material.SetColor(0, colors [lightColor]); 
 		blinkModel.material = lightOnMaterial;
 	}
 
@@ -480,7 +482,7 @@ public class Rhythms
 	{
 		blinkLight.enabled = false;
 		blinkSprite.enabled = false;
-		//blinkModel.material.color = new Color (0, 0, 0);
+		blinkModel.material.SetColor (0,new Color (0, 0, 0));
 		blinkModel.material = lightOffMaterial;
 	}
 
@@ -495,7 +497,15 @@ public class Rhythms
 	}
 
 	void loadSettings() {
-		//TODO
+
+		RhythmsSettings modSettings = JsonConvert.DeserializeObject<RhythmsSettings> (settings.Settings);
+
+		if (modSettings != null) {
+			colorBlindMode = modSettings.GetColorBlindMode ();
+
+		} else {
+			LogMessage ("Warning: Could <em>not</em> load settings file!");
+		}
 	}
 
 }
