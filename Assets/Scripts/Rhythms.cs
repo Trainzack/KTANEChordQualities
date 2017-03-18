@@ -23,6 +23,8 @@ public class Rhythms
 
 	#region Settings Defined
 	private bool colorBlindMode = false;
+	private int DebugPattern = -1;
+	private int DebugColor = -1;
 	#endregion
 
 
@@ -69,7 +71,7 @@ public class Rhythms
 	{									//Number %4 = button to press, number /4 = instruction: 0: press, 1: hold 1 beep, 2: hold 2 beep, or number = -2: press repeatedly
 		new int[] {8,-2,11,10},//Pattern 0
 		new int[] {4,1,2,6},
-		new int[] {6,6,0,3},
+		new int[] {6,5,0,3},
 		new int[] {1,7,7,6},
 		new int[] {5,3,4,3},
 		new int[] {4,1,2,2},
@@ -210,6 +212,8 @@ public class Rhythms
 			};
 		}
 
+		//LogMessage (ManualGen.getManual ());
+
 		string message = "Detected " + litIndicators + " lit indicator(s)";
 
 
@@ -264,13 +268,17 @@ public class Rhythms
 
 		pattern = Random.Range (0, patterns.Length);
 		lightColor = Random.Range (0, colors.Length);
-
-
+		if (DebugPattern > -1) {
+			pattern = DebugPattern;
+		}
+		if (DebugColor > -1) {
+			lightColor = DebugColor;
+		}
 
 		blinkLight.color = colors[lightColor];
 		blinkSprite.color = colors[lightColor];
 
-		tempo += Random.Range (1, 7);//Pacing, and prevent nearby patters matching each other.
+		tempo += Random.Range (1, 7);//Pacing, and prevent nearby patterns matching each other.
 
 		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light; tempo set at " + tempo + " BPM");
 
@@ -409,7 +417,7 @@ public class Rhythms
 			//LogMessage ("Beep: " + beepsPlayed + " PressID: " + thisPressId);
 			stopBeep ();
 			audioRefBeep = GetComponent<KMAudio>().PlaySoundAtTransformWithRef("HoldChirp", transform);
-			yield return new WaitForSeconds (1.1f);
+			yield return new WaitForSeconds (1.2f);
 
 		}
 	}
@@ -498,14 +506,25 @@ public class Rhythms
 
 	void loadSettings() {
 
-		RhythmsSettings modSettings = JsonConvert.DeserializeObject<RhythmsSettings> (settings.Settings);
-
-		if (modSettings != null) {
-			colorBlindMode = modSettings.GetColorBlindMode ();
-
-		} else {
-			LogMessage ("Warning: Could <em>not</em> load settings file!");
+		try {
+			RhythmsSettings modSettings = JsonConvert.DeserializeObject<RhythmsSettings> (settings.Settings);
+			if (modSettings != null) {
+				colorBlindMode = modSettings.GetColorBlindMode ();
+				int _DebugPattern = modSettings.GetDebugModePattern () - 1;
+				int _DebugColor = modSettings.GetDebugModeColor () - 1;
+				if (_DebugPattern >= 0 & _DebugPattern < patterns.Length) {
+					DebugPattern = _DebugPattern;
+				}
+				if (_DebugColor >= 0 & _DebugColor < colors.Length) {
+					DebugColor = _DebugColor;
+				}
+			} else {
+				LogMessage ("Could not read settings file!");
+			}
+		} catch (JsonReaderException e) {
+			LogMessage ("Malformed settings file! " + e.Message);
 		}
+				
 	}
 
 }

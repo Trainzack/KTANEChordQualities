@@ -1,3 +1,11 @@
+
 {
-	"ColorBlindMode": true
+	"ColorBlindMode":	 	false,
+	"DebugModePattern": 	-1,
+	"DebugModeColor":		-1,
+	"How To Use":			"Colorblind mode can be enabled by setting ColorBlindMode to true. 
+	Changing the Debug Mode color and/or pattern to valid column or row numbers will make every module have
+	the color/pattern specified by that number. For example, setting DebugModePattern to 1 will make every
+	module have a blue light."
+
 }
