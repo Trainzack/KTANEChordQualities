@@ -280,7 +280,7 @@ public class Rhythms
 
 		tempo += Random.Range (1, 7);//Pacing, and prevent nearby patterns matching each other.
 
-		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light; tempo set at " + tempo + " BPM");
+		LogMessage ("Selected pattern number " + (pattern + 1) + " and a " + colorNames[lightColor]+ " light");
 
 		step = 1;
 		SetCorrect ();

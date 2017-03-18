@@ -18,11 +18,9 @@ MonoBehaviour:
     get it wrong.[/i]\r\n\r\n[h1]About[/h1]\r\n\r\nCount the rhythm of the flashing
     light, and hit the correct button (or hold it if necessary).\r\n\r\nThe ID of
     this module is MusicRhythms.\r\n\r\n[h1]Manual Pages[/h1]\r\n\r\n[url=https://trainzack.github.io/KTANERhythms/Manual/RhythmManualPage]HTML[/url]\r\n\r\nThe
-    GitHub page for this module can be found [url=https://github.com/Trainzack/KTANERhythms]here[/url].\r\n\r\n[u]Note:[/u]
-    If you are not familiar with standard musical note durations, you will need to
-    find a musical reference to solve this module.\r\n\r\n\r\n[h1]Issues:[/h1]\r\n\r\nPlease
+    GitHub page for this module can be found [url=https://github.com/Trainzack/KTANERhythms]here[/url].\r\n\r\n\r\n[h1]Issues:[/h1]\r\n\r\nPlease
     post any issues to the [url=https://github.com/Trainzack/KTANERhythms/issues]github
-    tracker[/url].\r"
+    tracker[/url].\r\n"
   PreviewImage: {fileID: 2800000, guid: 1802b3f7f4e93c944aeb813fdf47bac9, type: 3}
   Tags:
   - Regular Module
