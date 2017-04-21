@@ -4,7 +4,7 @@ using System.Collections;
 public class NoteLight : MonoBehaviour {
 
     public TextMesh noteName;
-    public TextMesh noteBacking;
+    public SpriteRenderer noteBacking;
     public Color normal;
     public Color highlighted;
 
@@ -74,6 +74,7 @@ public class NoteLight : MonoBehaviour {
         {
             noteName.text = "♯♭";
             noteName.characterSize = 0.7f;
+            noteBacking.transform.localScale -= new Vector3(0.09f, 0.09f, 0.09f);
             //noteName.transform.Translate(0, 0.002f, 0f);
         }
     }
