@@ -6,7 +6,7 @@ Material:
   m_ObjectHideFlags: 0
   m_PrefabParentObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_Name: Blinker
+  m_Name: LightGlow
   m_Shader: {fileID: 4800000, guid: f84e4e450c6ae2840b267d49f10e795b, type: 3}
   m_ShaderKeywords: 
   m_LightmapFlags: 5
@@ -18,17 +18,8 @@ Material:
     - first:
         name: _MainTex
       second:
-        m_Texture: {fileID: 2800000, guid: 4fdad50b5c2f02646a46b0b0bdf64aa9, type: 3}
+        m_Texture: {fileID: 2800000, guid: c5f51b501f6e1534a8e1e277ab3f6533, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - first:
-        name: _UnlitTex
-      second:
-        m_Texture: {fileID: 0}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
-    m_Floats:
-    - first:
-        name: _Blend
-      second: 0
+    m_Floats: []
     m_Colors: []
