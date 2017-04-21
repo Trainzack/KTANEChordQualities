@@ -34,7 +34,9 @@ public class NoteLight : MonoBehaviour {
 
     // Use this for initialization
     void Start () {
-        turnInputLightOff();
+        inputLight.material = lightOffMat;
+        InputLightIsOn = false;
+        flash.enabled = false;
         noteBacking.color = normal;
     }
 
@@ -62,7 +64,7 @@ public class NoteLight : MonoBehaviour {
 
     public void setOutputLight(bool on) {
         if (on) {
-            outputLight.text = "Δ";
+            outputLight.text = "▲";//▲Δ
         } else {
             outputLight.text = " ";
         }

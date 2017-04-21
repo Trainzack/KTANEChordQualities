@@ -60,24 +60,28 @@ public class ChordQualities
     #region Used In Module
     bool active = false;
     int position = 0;
+    float timeSelectPressed;
+    bool selectButtonIsPressed = false;
+    int selectPressNumber = 0;
+    const float selectCancelHoldTime = 0.6f;
+    float timeWheelPressed;
+    bool wheelIsPressed = false;
+    int wheelPressNumber = 0;
+    const float wheelBackHoldTime = 0.3f;
     #endregion
 
 
     void Start() { 
-        Init();
-	}
-    
-
-	void Init()
-	{
-
 		thisModuleNumber = moduleNumber++;
 		loadSettings ();
 		GetComponent<KMBombModule>().OnActivate += OnActivate;
-        WheelButton.OnInteract += delegate () { WheelButton.AddInteractionPunch(0.1f); SpinWheel(); return false; };
-        SelectButton.OnInteract += delegate () { SelectButton.AddInteractionPunch(0.3f); Select(); return false; };
+        WheelButton.OnInteract += delegate () { WheelButton.AddInteractionPunch(0.1f); SpinWheelOn(); return false; };
+        WheelButton.OnInteractEnded += delegate () { SpinWheelOff();};
+        SelectButton.OnInteract += delegate () { SelectButton.AddInteractionPunch(0.3f); SelectOn(); return false; };
+        SelectButton.OnInteractEnded += delegate () { SelectOff(); };
         SubmitButton.OnInteract += delegate () { SubmitButton.AddInteractionPunch(0.6f); Submit(); return false; };
-        
+        position = Random.RandomRange(0, 12);
+        WheelButton.GetComponent<Transform>().Rotate(new Vector3(0, 1, 0), (position*-360.0f/12.0f));
         selectChord();
         FindSolution();
     }
@@ -116,27 +120,86 @@ public class ChordQualities
         lights[position].ChangeHighlight(true);
     }
 
-    void SpinWheel() {
-        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
-        StartCoroutine(rotateWheel());
+    void SpinWheelOn() {
+        if (!wheelIsPressed)
+        {
+            timeWheelPressed = Time.time;
+            wheelIsPressed = true;
+            StartCoroutine(wheelHeld(++wheelPressNumber));
+        }
     }
 
-    IEnumerator rotateWheel() {
+    IEnumerator wheelHeld(int p)
+    {
+        yield return new WaitForSecondsRealtime(wheelBackHoldTime);
+        if (p == wheelPressNumber && wheelIsPressed)
+        {
+            GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.TypewriterKey, transform);
+        }
+    }
+
+    void SpinWheelOff()
+    {
+        float holdTime = Time.time - timeWheelPressed;
+        wheelIsPressed = false;
+        StartCoroutine(rotateWheel(holdTime < wheelBackHoldTime));
+        GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.ButtonPress, transform);
+    }
+
+    IEnumerator rotateWheel(bool forward) {
         lights[position].ChangeHighlight(false);
-        position = (position + 1) % 12;
+        if (forward)
+        {
+            position = (position + 1) % 12;
+        } else
+        {
+            position = (position + 11) % 12;
+        }
         lights[position].ChangeHighlight(true);
         Transform t = WheelButton.GetComponent<Transform>();
         int delay = 10;
         float rotateAmount = -(360/12.0f)/delay;
+        rotateAmount *= (forward) ? 1 : -1;
         for (int i = 0; i < delay; i++) {
             t.Rotate(new Vector3(0, 1, 0), rotateAmount);
             yield return new WaitForEndOfFrame();
         }
     }
 
-    void Select() {
-        NoteLight selected = lights[position];
-        selected.toggleInputLight();
+    void SelectOn()
+    {
+        if (!selectButtonIsPressed)
+        {
+            timeSelectPressed = Time.time;
+            selectButtonIsPressed = true;
+            StartCoroutine(selectHeld(++selectPressNumber));
+        }
+    }
+
+    IEnumerator selectHeld( int p)
+    {
+        yield return new WaitForSecondsRealtime(selectCancelHoldTime);
+        if (p == selectPressNumber && selectButtonIsPressed)
+        {
+            GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.TypewriterKey, transform);
+        }
+    }
+
+    void SelectOff()
+    {
+        float pressDuration = Time.time - timeSelectPressed;
+        selectButtonIsPressed = false;
+        if (pressDuration < selectCancelHoldTime)
+        {
+            NoteLight selected = lights[position];
+            selected.toggleInputLight();
+        } else
+        {
+            for (int i = 0; i < lights.Length; i++)
+            {
+                lights[i].turnInputLightOff();
+            }
+        }
     }
 
     void Submit() {
