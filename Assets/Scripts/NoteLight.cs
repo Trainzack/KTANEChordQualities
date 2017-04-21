@@ -62,7 +62,7 @@ public class NoteLight : MonoBehaviour {
 
     public void setOutputLight(bool on) {
         if (on) {
-            outputLight.text = "▲";
+            outputLight.text = "Δ";
         } else {
             outputLight.text = " ";
         }
@@ -73,9 +73,8 @@ public class NoteLight : MonoBehaviour {
         if (s == "*")
         {
             noteName.text = "♯♭";
-            noteName.characterSize = 0.5f;
-            noteBacking.characterSize = 0.35f;
-            noteBacking.transform.Translate(0, -0.002f, 0f);
+            noteName.characterSize = 0.7f;
+            //noteName.transform.Translate(0, 0.002f, 0f);
         }
     }
 

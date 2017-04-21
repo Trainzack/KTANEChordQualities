@@ -236,14 +236,16 @@ public class ChordQualities
 
     //EDITOR
 
+
+    //This method is only used to build the lights in the editor.
     public void BuildLights() {
         string[] noteNames = new string[] { "A", "*", "B", "C", "*", "D", "*", "E", "F", "*", "G", "*" };
         for (int i = 0; i < 12; i++) {
             if (lights[i] != null) {
-                DestroyImmediate(lights[i]);
+                DestroyImmediate(lights[i].gameObject);
             }
             Transform o = (Transform)Instantiate(lightPrefab, LightsSource.position, Quaternion.AngleAxis((360 * i / 12.0f), new Vector3(0, 1, 0)));
-            o.Translate(new Vector3(0.00f, 0.0f, 0.12f));
+            o.Translate(new Vector3(0.00f, 0.0f, 0.12f));//For vertical alignment. This is eaiser (but not better) than modifiying the prefab.
             o.SetParent(WheelButton.GetComponent<Transform>());
             NoteLight NL = o.GetComponent<NoteLight>();
             lights[i] = NL;
