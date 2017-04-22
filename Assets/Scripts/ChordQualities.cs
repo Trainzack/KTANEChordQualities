@@ -75,11 +75,6 @@ public class ChordQualities
 		thisModuleNumber = moduleNumber++;
 		loadSettings ();
 		GetComponent<KMBombModule>().OnActivate += OnActivate;
-        WheelButton.OnInteract += delegate () { WheelButton.AddInteractionPunch(0.1f); SpinWheelOn(); return false; };
-        WheelButton.OnInteractEnded += delegate () { SpinWheelOff();};
-        SelectButton.OnInteract += delegate () { SelectButton.AddInteractionPunch(0.3f); SelectOn(); return false; };
-        SelectButton.OnInteractEnded += delegate () { SelectOff(); };
-        SubmitButton.OnInteract += delegate () { SubmitButton.AddInteractionPunch(0.6f); Submit(); return false; };
         position = Random.RandomRange(0, 12);
         WheelButton.GetComponent<Transform>().Rotate(new Vector3(0, 1, 0), (position*-360.0f/12.0f));
         selectChord();
@@ -116,6 +111,11 @@ public class ChordQualities
     }
 
     void OnActivate() {
+        WheelButton.OnInteract += delegate () { WheelButton.AddInteractionPunch(0.1f); SpinWheelOn(); return false; };
+        WheelButton.OnInteractEnded += delegate () { SpinWheelOff(); };
+        SelectButton.OnInteract += delegate () { SelectButton.AddInteractionPunch(0.3f); SelectOn(); return false; };
+        SelectButton.OnInteractEnded += delegate () { SelectOff(); };
+        SubmitButton.OnInteract += delegate () { SubmitButton.AddInteractionPunch(0.6f); Submit(); return false; };
         active = true;
         lights[position].ChangeHighlight(true);
     }
@@ -173,6 +173,8 @@ public class ChordQualities
             timeSelectPressed = Time.time;
             selectButtonIsPressed = true;
             StartCoroutine(selectHeld(++selectPressNumber));
+            NoteLight selected = lights[position];
+            selected.toggleInputLight();
         }
     }
 
@@ -181,20 +183,6 @@ public class ChordQualities
         yield return new WaitForSecondsRealtime(selectCancelHoldTime);
         if (p == selectPressNumber && selectButtonIsPressed)
         {
-            GetComponent<KMAudio>().PlayGameSoundAtTransform(KMSoundOverride.SoundEffect.TypewriterKey, transform);
-        }
-    }
-
-    void SelectOff()
-    {
-        float pressDuration = Time.time - timeSelectPressed;
-        selectButtonIsPressed = false;
-        if (pressDuration < selectCancelHoldTime)
-        {
-            NoteLight selected = lights[position];
-            selected.toggleInputLight();
-        } else
-        {
             for (int i = 0; i < lights.Length; i++)
             {
                 lights[i].turnInputLightOff();
@@ -202,8 +190,13 @@ public class ChordQualities
         }
     }
 
+    void SelectOff()
+    {
+        selectButtonIsPressed = false;
+    }
+
     void Submit() {
-        StartCoroutine (endingFlourish());
+        StartCoroutine(endingFlourish());
     }
 
     IEnumerator endingFlourish() {
@@ -216,7 +209,10 @@ public class ChordQualities
                 yield return new WaitForSeconds(0.17f);
             }
         }
-        checkCorrect();
+        if (active)
+        {
+            checkCorrect();
+        }
         yield return new WaitForSeconds(0.17f);
         for (int i = 0; i < lights.Length; i++) {
             if (i != position) {
