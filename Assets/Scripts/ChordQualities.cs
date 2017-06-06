@@ -60,7 +60,6 @@ public class ChordQualities
     #region Used In Module
     bool active = false;
     int position = 0;
-    float timeSelectPressed;
     bool selectButtonIsPressed = false;
     int selectPressNumber = 0;
     const float selectCancelHoldTime = 0.6f;
@@ -75,7 +74,7 @@ public class ChordQualities
 		thisModuleNumber = moduleNumber++;
 		loadSettings ();
 		GetComponent<KMBombModule>().OnActivate += OnActivate;
-        position = Random.RandomRange(0, 12);
+        position = Random.Range(0, 12);
         WheelButton.GetComponent<Transform>().Rotate(new Vector3(0, 1, 0), (position*-360.0f/12.0f));
         selectChord();
         FindSolution();
@@ -170,7 +169,6 @@ public class ChordQualities
     {
         if (!selectButtonIsPressed)
         {
-            timeSelectPressed = Time.time;
             selectButtonIsPressed = true;
             StartCoroutine(selectHeld(++selectPressNumber));
             NoteLight selected = lights[position];
@@ -317,7 +315,6 @@ public class ChordQualities
 
     public void BuildManual() {
         string[] noteNames = new string[] { "A", "A♯", "B", "C", "C♯", "D", "D♯", "E", "F", "F♯", "G", "G♯" };
-        string[] intervals = new string[] { "P1", "m2", "M2", "m3", "M3", "P4", "d5", "P5", "m6", "M6", "m7", "M7" };
         Quality[] qs = Quality.getQualities();
         string message = "<table class=\"repeaters-table\"><tbody>\n\t\t\t\t<tr><th colspan = \"2\" class=\"whos-on-first-look-at-display\">Root to Quality</th><th class=\"repeaters-spacer\"></th><th colspan = \"2\" class=\"whos-on-first-look-at-display\">Quality to Root</th></tr>";
         for (int i = 0; i < 12; i++) {
