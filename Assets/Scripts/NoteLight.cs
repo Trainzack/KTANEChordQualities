@@ -18,7 +18,7 @@ public class NoteLight : MonoBehaviour {
     public Material lightOffMat;
     public Note note;
 
-    public KMAudio audio;
+    public new KMAudio audio;
     
     private bool inputLightIsOn = false;
 
