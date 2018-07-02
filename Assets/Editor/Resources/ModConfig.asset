@@ -13,5 +13,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   id: ChordQualities
   title: Chord Qualities
+  description: "[i]They say that anything goes in jazz, but I didn't know that that
+    includes long boring tables![/i]\r\n\r\n[h1]About[/h1]\r\n\r\nLook at the notes
+    this module gives you and figure out what chord they make. Use that chord to figure
+    out what chord to give it.\r\nThe ID of this module is ChordQualities.\r\n\r\n[h1]Manual
+    Pages[/h1]\r\n\r\n[url=https://ktane.timwi.de/HTML/Chord%20Qualities.html]HTML[/url]\r\n\r\nThe
+    GitHub page for this module can be found [url=https://github.com/Trainzack/KTANEChordQualities]here[/url].\r\n\r\n\r\n[h1]Issues:[/h1]\r\n\r\nPlease
+    post any issues to the [url=https://github.com/Trainzack/KTANEChordQualities/issues]github
+    tracker[/url]."
   version: 1.1
   outputFolder: build
+  previewImage: {fileID: 2800000, guid: a0e54f4bbebfeb34bb68efcc52bc6662, type: 3}

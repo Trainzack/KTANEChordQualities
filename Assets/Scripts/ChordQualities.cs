@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections;
 using Newtonsoft.Json;
 using System.Linq;
+using System;
 
 public enum Note {
     A,
@@ -74,14 +75,14 @@ public class ChordQualities
 		thisModuleNumber = moduleNumber++;
 		loadSettings ();
 		GetComponent<KMBombModule>().OnActivate += OnActivate;
-        position = Random.Range(0, 12);
+        position = UnityEngine.Random.Range(0, 12);
         WheelButton.GetComponent<Transform>().Rotate(new Vector3(0, 1, 0), (position*-360.0f/12.0f));
         selectChord();
         FindSolution();
     }
 
     private void selectChord() {
-        givenChord = new Chord(qualities[Random.Range(0, 12)], (Note)Random.Range(0, 12));
+        givenChord = new Chord(qualities[UnityEngine.Random.Range(0, 12)], (Note)UnityEngine.Random.Range(0, 12));
         LogMessage("Displayed chord: " + givenChord);
         for (int i = 0;i < lights.Length; i++) {
             bool inChord = false;
@@ -351,6 +352,50 @@ public class ChordQualities
         message += "</tbody>\n\t\t\t</table>";
         Debug.Log(message);
     }
+	#region Twitch Plays
+	private string TwitchHelpMessage = "Submit a chord using !{0} submit A B C# D";
+	private static string[] noteIndexes = { "a", "a#", "b", "c", "c#", "d", "d#", "e", "f", "f#", "g", "g#" };
+	private IEnumerator ProcessTwitchCommand(string command)
+	{
+		var commands = command.ToLowerInvariant().Trim().Replace('♯', '#').Split(new[] { ' ' }, StringSplitOptions.RemoveEmptyEntries);
 
+		if (commands.Length == 5 && (commands[0] == "submit" || commands[0] == "play" || commands[0] == "press"))
+		{
+			string[] notes = commands.Where((_, i) => i > 0).ToArray();
+			if (notes.All(note => Array.IndexOf(noteIndexes, note) > -1))
+			{
+				if (notes.Distinct().Count() == 4)
+				{
+					yield return null;
+
+					yield return SelectButton;
+					yield return new WaitForSeconds(0.8f);
+					yield return SelectButton;
+
+					foreach (string note in notes)
+					{
+						int notePosition = Array.IndexOf(noteIndexes, note);
+						while (position != notePosition)
+						{
+							yield return WheelButton;
+							yield return new WaitForSeconds(0.1f);
+							yield return WheelButton;
+
+							yield return new WaitForSeconds(0.1f);
+						}
+
+						yield return SelectButton;
+						yield return new WaitForSeconds(0.1f);
+						yield return SelectButton;
+						yield return new WaitForSeconds(0.1f);
+					}
+
+					yield return SubmitButton;
+					yield return new WaitForSeconds(0.1f);
+					yield return SubmitButton;
+				}
+			}
+		}
+	}
+	#endregion
 }
-
